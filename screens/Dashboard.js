@@ -78,7 +78,15 @@ const Dashboard = ({ navigation }) => {
     );
   }
 
-  function renderCountries() {}
+  function renderCountries() {
+    <Animated.FlatList
+      horizontal
+      pagingEnabled
+      snapToAlignment={"center"}
+      showsHorizontalScrollIndicator={false}
+      data={countries}
+    />;
+  }
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.black }}>
