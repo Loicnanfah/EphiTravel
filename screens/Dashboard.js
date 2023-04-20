@@ -12,7 +12,7 @@ import {
   Image,
 } from "react-native";
 import { COLORS, FONTS, SIZES, dummyData, icons, images } from "../constants";
-import { TextButton } from "../compoments";
+import { TextButton, HeaderBar } from "../compoments";
 
 const COUNTRUES_ITEM_SIZE = SIZES.width / 3;
 const PLACES_ITEM_SIZE =
