@@ -2,4 +2,5 @@
 
 import TextButton from "./TextButton";
 import HeaderBar from "./HeaderBar";
-export { TextButton, HeaderBar };
+import TextIconButton from "./TextIconButton";
+export { TextButton, HeaderBar, TextIconButton };
