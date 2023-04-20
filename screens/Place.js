@@ -25,11 +25,69 @@ const Place = ({ navigation, route }) => {
         <HeaderBar
           title={""}
           lefOnPressed={() => navigation.goBack()}
-          right={false}
+          rigth={false}
           containerStyle={{
             marginTop: SIZES.padding * 2,
           }}
         />
+        <View
+          style={{
+            flex: 1,
+            paddingHorizontal: SIZES.padding,
+            justifyContent: "flex-end",
+            marginBottom: 100,
+          }}
+        >
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <Text
+              style={{
+                color: COLORS.white,
+                ...FONTS.largeTitle,
+              }}
+            >
+              {selectedPlace?.name}
+            </Text>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
+              <Text
+                style={{
+                  marginRight: 5,
+                  color: COLORS.white,
+                  ...FONTS.h3,
+                }}
+              >
+                {selectedPlace?.rate}
+              </Text>
+              <Image
+                source={icons.star}
+                style={{
+                  height: 20,
+                  width: 20,
+                }}
+              />
+            </View>
+          </View>
+
+          <Text
+            style={{
+              marginTop: SIZES.base,
+              color: COLORS.white,
+              ...FONTS.body3,
+            }}
+          >
+            {selectedPlace?.description}
+          </Text>
+        </View>
       </ImageBackground>
     );
   }

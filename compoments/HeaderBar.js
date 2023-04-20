@@ -4,7 +4,12 @@ import { View, Text, TouchableOpacity, Image } from "react-native";
 import { COLORS, FONTS, SIZES, dummyData, icons, images } from "../constants";
 import React from "react";
 
-export default function HeaderBar({ title, lefOnPressed, containerStyle }) {
+export default function HeaderBar({
+  title,
+  lefOnPressed,
+  containerStyle,
+  rigth,
+}) {
   return (
     <View
       style={{
