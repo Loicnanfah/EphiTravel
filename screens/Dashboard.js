@@ -12,6 +12,7 @@ import {
   Image,
 } from "react-native";
 import { COLORS, FONTS, SIZES, dummyData, icons, images } from "../constants";
+import { TextButton } from "../compoments";
 
 const COUNTRUES_ITEM_SIZE = SIZES.width / 3;
 const PLACES_ITEM_SIZE =
@@ -34,6 +35,7 @@ const Dashboard = ({ navigation }) => {
     { id: -2 },
   ]);
 
+  const [placeScrollPosition, setPlacesScrollPosition] = useState(0);
   function renderHeader() {
     return (
       <View
@@ -108,6 +110,20 @@ const Dashboard = ({ navigation }) => {
           ],
           { useNativeDriver: false }
         )}
+        onMomentumScrollEnd={(event) => {
+          //calculate position
+
+          var position = (
+            event.nativeEvent.contentOffset.x / COUNTRUES_ITEM_SIZE
+          ).toFixed(0);
+
+          //set places
+          setPlaces([
+            { id: -1 },
+            ...dummyData.countries[position].places,
+            { id: -2 },
+          ]);
+        }}
         renderItem={({ item, index }) => {
           const oppacity = countryScrollX.interpolate({
             inputRange: [
@@ -186,6 +202,14 @@ const Dashboard = ({ navigation }) => {
     );
   }
 
+  function exploreButonHandler() {
+    //get places current index
+    const currentIndex = parseInt(placeScrollPosition, 10) + 1;
+    // navigate to next screen
+    console.log(places[currentIndex]);
+    navigation.navigate("Place", { selectedPlace: places[currentIndex] });
+  }
+
   function renderPlaces() {
     return (
       <Animated.FlatList
@@ -216,12 +240,22 @@ const Dashboard = ({ navigation }) => {
           ],
           { useNativeDriver: false }
         )}
+        onMomentumScrollEnd={(event) => {
+          //calculate position
+
+          var position = (
+            event.nativeEvent.contentOffset.x / PLACES_ITEM_SIZE
+          ).toFixed(0);
+
+          //set places
+          setPlacesScrollPosition(position);
+        }}
         renderItem={({ item, index }) => {
           const oppacity = placeScrollX.interpolate({
             inputRange: [
-              (index - 2) * COUNTRUES_ITEM_SIZE,
-              (index - 1) * COUNTRUES_ITEM_SIZE,
-              index * COUNTRUES_ITEM_SIZE,
+              (index - 2) * PLACES_ITEM_SIZE,
+              (index - 1) * PLACES_ITEM_SIZE,
+              index * PLACES_ITEM_SIZE,
             ],
             outputRange: [0.3, 1, 0.3],
             extrapolate: "clamp",
@@ -240,9 +274,9 @@ const Dashboard = ({ navigation }) => {
 
           const height = placeScrollX.interpolate({
             inputRange: [
-              (index - 2) * COUNTRUES_ITEM_SIZE,
-              (index - 1) * COUNTRUES_ITEM_SIZE,
-              index * COUNTRUES_ITEM_SIZE,
+              (index - 2) * PLACES_ITEM_SIZE,
+              (index - 1) * PLACES_ITEM_SIZE,
+              index * PLACES_ITEM_SIZE,
             ],
             outputRange: [
               SIZES.height / 2.25,
@@ -292,9 +326,32 @@ const Dashboard = ({ navigation }) => {
                 >
                   <Text
                     style={{
-                      marginBottom: SIZES.padding,
+                      marginBottom: SIZES.radius,
+                      color: COLORS.white,
+                      ...FONTS.body3,
                     }}
-                  ></Text>
+                  >
+                    {item.name}
+                  </Text>
+                  <Text
+                    style={{
+                      marginBottom: SIZES.padding * 2,
+                      textAlign: "center",
+                      color: COLORS.white,
+                      ...FONTS.body3,
+                    }}
+                  >
+                    {item.description}
+                  </Text>
+                  <TextButton
+                    label={"Explore"}
+                    customContainerStyle={{
+                      position: "absolute",
+                      bottom: -20,
+                      width: 150,
+                    }}
+                    onPress={() => exploreButonHandler()}
+                  />
                 </View>
               </Animated.View>
             );
